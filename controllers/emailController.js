@@ -8,17 +8,24 @@ async function isEmailValid(email) {
 exports.checkEmail = async (req, res, next) => {
 
     const { emailId } = req.body;
+    let arr = emailId
 
     if (!emailId)
         return res.status(400).json({ message: 'Reciptent Email Missing' });
 
-    const { valid, reason, validators } = await isEmailValid(emailId);
+    if (!Array.isArray(emailId)) arr = [emailId]
 
-    if (!valid)
-        return res.status(400).send({
-            message: "Please provide a valid email address.",
-            reason: validators[reason].reason
-        })
+    for (let email of arr) {
+
+        const { valid, reason, validators } = await isEmailValid(email);
+
+        if (!valid)
+            return res.status(400).send({
+                message: "Please provide a valid email address.",
+                incorrectEmail: email,
+                reason: validators[reason].reason
+            })
+    }
 
     const messageOptions = {
         subject: req.body.subject,
