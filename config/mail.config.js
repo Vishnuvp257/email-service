@@ -1,8 +1,19 @@
 require('dotenv').config();
 const nodemailer = require('nodemailer');
 const { google } = require('googleapis');
+const hbs = require('nodemailer-express-handlebars')
+const path = require('path')
 
 const OAuth2 = google.auth.OAuth2;
+
+// point to the template folder
+const handlebarOptions = {
+    viewEngine: {
+        partialsDir: path.resolve('../views/'),
+        defaultLayout: false,
+    },
+    viewPath: path.resolve('./views/'),
+};
 
 // creating the transporter
 const createTransporter = async () => {
@@ -38,6 +49,11 @@ const createTransporter = async () => {
         },
 
     });
+
+    // use a template file with nodemailer
+
+    transporter.use('compile', hbs(handlebarOptions))
+
 
     return transporter;
 }
