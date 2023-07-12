@@ -56,11 +56,12 @@ following environment variables to your .env file
 
 #### Body parameters
 
-| Parameter | Type     | Description                           |
-| :-------- | :------- | :------------------------------------ |
-| `emailId` | `string` | **Required**. Reciptent email address |
-| `subject` | `string` | Mail subject                          |
-| `text`    | `string` | Email body text                       |
+| Parameter    | Type                                            | Description                           |
+| :----------- | :---------------------------------------------- | :------------------------------------ |
+| `emailId`    | `string` or `Array<string>`                     | **Required**. Reciptent email address |
+| `subject`    | `string`                                        | Mail subject                          |
+| `text`       | `string`                                        | Email body text                       |
+| `attachment` | `Array<object> ({filename:string,path:string})` | File Location and name                |
 
 ## Authors
 
