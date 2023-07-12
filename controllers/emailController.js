@@ -1,4 +1,5 @@
 const emailValidator = require('deep-email-validator');
+
 const createTransporter = require('../config/mail.config');
 
 async function isEmailValid(email) {
@@ -27,29 +28,44 @@ exports.checkEmail = async (req, res, next) => {
             })
     }
 
-    const messageOptions = {
-        subject: req.body.subject,
-        text: req.body.text,
-        to: req.body.emailId,
-        from: process.env.EMAIL
-    };
+    next();
+}
 
-    req.body = messageOptions;
+exports.checkType = (req, res, next) => {
+
+    const type = req.params.type;
+    req.body.type = type;
 
     next();
 }
 
-const sendEmail = async (messageOptions) => {
-    let emailTransporter = await createTransporter();
-    await emailTransporter.sendMail(messageOptions);
-};
+const setEmailOptions = (body) => {
 
-exports.postEmail = (req, res) => {
+    const emailOptions = {
+        subject: body.subject,
+        to: body.emailId,
+        template: body.type ? body.type : 'index',
+        context: {
+            text: body.text,
+            ...body.data,
+        },
+        attachments: body.attachments ? body.attachments : ""
+    };
+
+    return emailOptions;
+}
+
+exports.postEmail = async (req, res) => {
 
     try {
-        sendEmail(req.body);
+        let emailTransporter = await createTransporter();
+
+        const emailOptions = setEmailOptions(req.body);
+        console.log(emailOptions);
+        await emailTransporter.sendMail(emailOptions);
+
         res.status(200).json({ message: 'done' })
     } catch (e) {
-        res.status(404).json({ message: "failed" });
+        res.status(404).json({ message: "failed", error: e });
     }
 }
