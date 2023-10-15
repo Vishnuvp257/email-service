@@ -1,0 +1,22 @@
+{
+	"name": "email-api",
+	"version": 1,
+	"builds": [
+		{
+			"src": "./server.js",
+			"use": "@now/node"
+		}
+	],
+	"routes": [
+		{
+			"src": "/(.*)",
+			"dest": "/"
+		}
+	],
+	"env": {
+		"EMAIL": "viratprakashvp@gmail.com",
+		"REFRESH_TOKEN": "1//04lFiUuGk9QZvCgYIARAAGAQSNwF-L9IrbpNjHhoIYyQH3v-BEHA-m5pE_75RTn3fBOF5QHCn1z3-oCBA2vrZ2oOqV44Ck7is38Y",
+		"CLIENT_SECRET": "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",
+		"CLIENT_ID": "292769371399-sphq4f3k4gvd2fv97kg6mfgm2nib7fum.apps.googleusercontent.com"
+	}
+}
