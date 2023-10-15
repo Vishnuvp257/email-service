@@ -63,7 +63,7 @@ exports.postEmail = async (req, res) => {
 
         emailTransporter.sendMail(emailOptions);
 
-        res.status(200).json({ message: 'done' })
+        res.status(200).json({ message: 'sended' })
     } catch (e) {
         res.status(404).json({ message: "failed", error: e });
     }
