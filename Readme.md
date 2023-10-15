@@ -51,7 +51,7 @@ following environment variables to your .env file
 #### Post an email
 
 ```http
-  POST /api/v1/send-mail
+  POST https://email-taupe.vercel.app/api/v1/send-mail
 ```
 
 #### Body parameters
