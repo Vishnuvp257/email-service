@@ -14,19 +14,19 @@ exports.checkEmail = async (req, res, next) => {
     if (!emailId)
         return res.status(400).json({ message: 'Reciptent Email Missing' });
 
-    if (!Array.isArray(emailId)) arr = [emailId]
+    // if (!Array.isArray(emailId)) arr = [emailId]
 
-    for (let email of arr) {
+    // for (let email of arr) {
 
-        const { valid, reason, validators } = await isEmailValid(email);
+    //     const { valid, reason, validators } = await isEmailValid(email);
 
-        if (!valid)
-            return res.status(400).send({
-                message: "Please provide a valid email address.",
-                incorrectEmail: email,
-                reason: validators[reason].reason
-            })
-    }
+    //     if (!valid)
+    //         return res.status(400).send({
+    //             message: "Please provide a valid email address.",
+    //             incorrectEmail: email,
+    //             reason: validators[reason].reason
+    //         })
+    // }
 
     next();
 }
@@ -56,12 +56,12 @@ const setEmailOptions = (body) => {
 }
 
 exports.postEmail = async (req, res) => {
-
+    
     try {
         let emailTransporter = await createTransporter();
         const emailOptions = setEmailOptions(req.body);
 
-        await emailTransporter.sendMail(emailOptions);
+        emailTransporter.sendMail(emailOptions);
 
         res.status(200).json({ message: 'done' })
     } catch (e) {
