@@ -59,9 +59,8 @@ exports.postEmail = async (req, res) => {
 
     try {
         let emailTransporter = await createTransporter();
-
         const emailOptions = setEmailOptions(req.body);
-        console.log(emailOptions);
+
         await emailTransporter.sendMail(emailOptions);
 
         res.status(200).json({ message: 'done' })

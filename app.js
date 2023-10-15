@@ -14,9 +14,12 @@ app.use(morgan('dev'));
 
 app.use(express.json());
 
-
 //routes
 app.use('/api/v1', emailRouter);
+
+app.get('/', (req, res) => {
+    res.send('Hello World');
+});
 
 app.all('*', (req, res, next) => {
     next(new AppError('cant find the url'));
